@@ -1,21 +1,41 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import Collection from './Collections';
+import NavBar from './NavBar';
+import Members from './Members';
+import About from './About';
+import Login from './Login';
+import Home from './Home';
+import PageNotFound from './PageNotFound';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <Router>
+      <div>
+        <NavBar 
+          webSiteName = 'OhhMyGene'
+        />
+        <div className='container'>
+          <Switch>
+            <Route path='/' component={Home} exact/>
+            <Route path='/collection' component={Collection}/>
+            <Route path='/members' component={Members}/>
+            <Route path='/about' component={About}/>
+            <Route path='/login' component={Login}/>
+            <Route component={PageNotFound}/>
+          </Switch>
+        </div>
       </div>
+      </Router>
+
     );
   }
+}
+
+App.propTypes = {
+  children: PropTypes.object.isRequired
 }
 
 export default App;
