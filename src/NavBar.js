@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 class NavBar extends Component {
   render() {
@@ -32,8 +32,8 @@ class NavBar extends Component {
   }
 }
 
-NavBar.propTypes = {
-};
+// NavBar.propTypes = {
+// };
 
 export default NavBar;
 

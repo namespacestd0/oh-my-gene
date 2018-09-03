@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 class ContactSheet extends Component {
   render() {
@@ -47,7 +47,7 @@ class ContactSheet extends Component {
   }
 }
 
-ContactSheet.propTypes = {
-};
+// ContactSheet.propTypes = {
+// };
 
 export default ContactSheet;

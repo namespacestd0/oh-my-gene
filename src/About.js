@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
-import Panel from './Panel';
+// import {Link} from 'react-router-dom';
+// import PropTypes from 'prop-types';
+// import Panel from './Panel';
 
 class About extends Component {
   render() {
@@ -19,7 +19,7 @@ class About extends Component {
   }
 }
 
-About.propTypes = {
-};
+// About.propTypes = {
+// };
 
 export default About;

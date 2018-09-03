@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import Collection from './Collections';
+// import PropTypes from 'prop-types';
+import Collection from './Collection';
 import NavBar from './NavBar';
 import Members from './Members';
 import About from './About';
@@ -34,8 +34,7 @@ class App extends Component {
   }
 }
 
-App.propTypes = {
-  children: PropTypes.object.isRequired
-}
+// App.propTypes = {
+// }
 
 export default App;
