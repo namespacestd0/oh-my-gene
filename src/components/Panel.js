@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 class Panel extends Component {
   render() {
+    // INDIVIDUAL GENE INFO BOX IN MY COLLECTION TAB
     return (
         <div className="panel panel-default">
             <div className="panel-heading">

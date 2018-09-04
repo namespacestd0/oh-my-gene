@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 class Login extends Component {
   render() {
     return (
+        // THIS COMPONENT IS NOT CURRENTLY IN USE
         <div className="container-fluid">
             <div className="row">
                 <div className="text-center col-sm-3"></div>

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 
 class ContactSheet extends Component {
   render() {
+    // THIS COMPONENT IS NOT CURRENTLY IN USE
     return (
         <div>
         <h2>Filterable Table</h2>

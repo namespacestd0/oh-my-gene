@@ -3,7 +3,7 @@ import axios from 'axios';
 // import PropTypes from 'prop-types';
 
 class Home extends Component {
-  state = {
+  state = { // home page search result state
     gene_id_input: '',
     info: false,
     warning: false,
@@ -14,13 +14,16 @@ class Home extends Component {
     event.preventDefault();
     // parse input
     let gene_id_num = parseInt(this.state.gene_id_input, 10);
+    // only accept number input
     if (gene_id_num) {
+      // request backend INSERT query
       axios.post('/api', {
         action: 'add',
         gene_id: gene_id_num
       })
       .then((response) => {
         // console.log(response);
+        // show corresponding message box for different results
         if (response.data==='Already exists.') {
           this.setState({warning: false, info: true, success: false});
         } else if (response.data==='Gene id does not exist.') {

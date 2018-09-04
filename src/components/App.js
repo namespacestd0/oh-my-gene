@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-// import PropTypes from 'prop-types';
 import Collection from './Collection';
 import NavBar from './NavBar';
 import Members from './Members';
@@ -33,8 +32,5 @@ class App extends Component {
     );
   }
 }
-
-// App.propTypes = {
-// }
 
 export default App;

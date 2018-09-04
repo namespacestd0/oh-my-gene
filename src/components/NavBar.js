@@ -22,6 +22,7 @@ class NavBar extends Component {
             <li><NavLink activeClassName="active" to="/" exact>Home</NavLink></li>
             {links}
           </ul>
+          LOGIN LOGIC BELOW, NOT CURRENTLY IN USE
           {/* <ul className="nav navbar-nav navbar-right">
             <li><a href=""><span className="glyphicon glyphicon-user"></span> Sign Up</a></li>
             <li><NavLink to="/login"><span className="glyphicon glyphicon-log-in"></span> Login</NavLink></li>

@@ -6,24 +6,24 @@ import axios from 'axios';
 
 class Console extends Component {
   state = {
-    geneItems: []
+    geneItems: [] // items to render
   }
   componentDidMount() {
-    let savedGeneIDs = [];
-    axios.get('/api').then(resp=>{
-      for (let i=0; i< resp.data.length; i++) {
-        savedGeneIDs.push(resp.data[i].gene_id)
+    let savedGeneIDs = []; // intermediate data structure to add query results one by one
+    axios.get('/api').then(resp=>{ // read from back end all of the saved records
+      for (let i=0; i< resp.data.length; i++) { // add all ids individually
+        savedGeneIDs.push(resp.data[i].gene_id) // push to intermediate storage array
       }
       // console.log(savedGeneIDs);
-      for (let i=0; i< savedGeneIDs.length; i++) {
+      for (let i=0; i< savedGeneIDs.length; i++) {  // read summary from mygene api individually
         // console.log('success')
-        axios.get('http://mygene.info/v3/gene/'+ savedGeneIDs[i].toString()).then(resp=>{
+        axios.get('http://mygene.info/v3/gene/'+ savedGeneIDs[i].toString()).then(resp=>{ // calling the my gene API
           this.setState((prevState, props) => {
-            let summary = 'No detail provided at this time.';
+            let summary = 'No detail provided at this time.'; // default for items without summary
             if (resp.data.hasOwnProperty('summary')) {
-              summary = resp.data['summary']
+              summary = resp.data['summary'] // overwrite the default no-summary text
             }
-            return ({geneItems: prevState.geneItems.concat([{
+            return ({geneItems: prevState.geneItems.concat([{ // update internal state storage of items to render
               heading: resp.data["_id"] + ' ' + resp.data["symbol"],
               content: summary
             }])});
@@ -35,16 +35,16 @@ class Console extends Component {
   }
   deleteItem = (id) => {
     // console.log(id);
-    axios.post('/api', {
+    axios.post('/api', { // call backend server to run delete query
       action: 'delete',
       gene_id: id
     }).then(()=>{
-      this.setState((prevState)=>{
+      this.setState((prevState)=>{ // update local item render array to not show the deleted item
         return({
           geneItems: prevState.geneItems.filter((item)=>parseInt(item.heading.split(' ')[0],10)!==id)
         })
       })
-      this.forceUpdate();
+      this.forceUpdate(); // in case the state mutation is not immediately reflected
     })
   }
   render() {
