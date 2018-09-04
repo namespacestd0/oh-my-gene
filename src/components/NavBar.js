@@ -6,7 +6,7 @@ class NavBar extends Component {
   render() {
     const linkItems = [
       {name: 'My Collection', url: '/collection'},
-      {name: 'Members', url: '/members'},
+      // {name: 'Members', url: '/members'},
       {name: 'About', url: '/about'}
     ];
     let links = linkItems.map((linkItem, index) => (
@@ -22,10 +22,10 @@ class NavBar extends Component {
             <li><NavLink activeClassName="active" to="/" exact>Home</NavLink></li>
             {links}
           </ul>
-          <ul className="nav navbar-nav navbar-right">
+          {/* <ul className="nav navbar-nav navbar-right">
             <li><a href=""><span className="glyphicon glyphicon-user"></span> Sign Up</a></li>
             <li><NavLink to="/login"><span className="glyphicon glyphicon-log-in"></span> Login</NavLink></li>
-          </ul>
+          </ul> */}
         </div>
       </nav>
     );

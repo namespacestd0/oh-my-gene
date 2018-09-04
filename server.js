@@ -8,15 +8,15 @@ const app = express();
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('/test', function (req, res) {
   return res.send('[express] server okay');
 });
 
-// app.get('/', function (req, res) {
-//   res.sendFile(path.join(__dirname, './public/index.html'));
-// });
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 app.get('/api', function (req, res) {
   geneStore.findAll().then(entries => {
@@ -26,7 +26,6 @@ app.get('/api', function (req, res) {
 })
 
 app.post('/api', function (req, res) {
-  // console.log(req.body);
   if (req.body.action === 'add') {
     axios.get('http://mygene.info/v3/gene/' + req.body.gene_id.toString()).then(resp => {
       // check if the id is valid
@@ -50,13 +49,11 @@ app.post('/api', function (req, res) {
             }).then(() => {
               res.send('Insert Success.');
             })
-            // res.json({ user: req.body });
           }
         })
       }
     }).catch(error=>{
       res.send('Gene id does not exist.');
-      // console.log(error);
     });
   } else if (req.body.action === 'delete') {
     geneStore.destroy({
