@@ -11,11 +11,11 @@ class Login extends Component {
                 <h1 className="h3 mb-3 font-weight-normal">Please Login</h1>
                 <form action="/action_page.php">
                 <div className="form-group">
-                    <label className="sr-only" for="email">Email address:</label>
+                    <label className="sr-only" htmlFor="email">Email address:</label>
                     <input type="email" className="form-control" id="email"/>
                 </div>
                 <div className="form-group">
-                    <label className="sr-only" for="pwd">Password:</label>
+                    <label className="sr-only" htmlFor="pwd">Password:</label>
                     <input type="password" className="form-control" id="pwd"/>
                 </div>
                 <div className="checkbox">

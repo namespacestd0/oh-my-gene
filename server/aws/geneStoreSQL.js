@@ -6,13 +6,13 @@ const DB_Name = 'gene',
     DB_password = '***REMOVED***';
 
 // initiate connection
-const pgClient = new Sequelize(DB_Name, DB_username, DB_password, {
+const sequelize = new Sequelize(DB_Name, DB_username, DB_password, {
     host: DB_endpoint,
     dialect: 'postgres'
 })
 
 // define the schema of database table
-const Gene = pgClient.define('gene', // model name
+const Gene = sequelize.define('fav_genes', // model name
     {
         user_id: {
             type: Sequelize.STRING,
@@ -21,11 +21,15 @@ const Gene = pgClient.define('gene', // model name
         gene_id: {
             type: Sequelize.STRING,
         },
-        created: {
-            type: Sequelize.BIGINT,
-        }
+        // created: {
+        //     type: Sequelize.BIGINT,
+        // }
     }
 );
+
+// sequelize.query("SELECT * FROM fav_genes").then(myTableRows => {
+//     console.log(myTableRows)
+//   })
 
 // sync the model and export it
 Gene.sync().then(()=>{

@@ -5,7 +5,12 @@ class Panel extends Component {
   render() {
     return (
         <div className="panel panel-default">
-            <div className="panel-heading">{this.props.heading}</div>
+            <div className="panel-heading">
+                {this.props.heading}
+                <span className="pull-right">
+                    <a onClick={()=>{
+                        this.props.onDelete(parseInt(this.props.heading.split(' ')[0], 10))}}>Delete</a></span>
+                </div>
             <div className="panel-body">{this.props.content}</div>
         </div>
     );
@@ -15,6 +20,7 @@ class Panel extends Component {
 Panel.propTypes = {
     heading: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
+    onDelete: PropTypes.func.isRequired
 };
 
 export default Panel;
