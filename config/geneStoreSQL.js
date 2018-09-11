@@ -8,7 +8,8 @@ const DB_Name = 'gene',
 // initiate connection
 const sequelize = new Sequelize(DB_Name, DB_username, DB_password, {
     host: DB_endpoint,
-    dialect: 'postgres'
+    dialect: 'postgres',
+    // logging: false
 })
 
 // define the schema of database table
