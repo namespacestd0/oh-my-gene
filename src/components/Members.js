@@ -1,48 +1,70 @@
 import React, { Component } from 'react';
+const axios = require('axios');
 // import PropTypes from 'prop-types';
 
 class ContactSheet extends Component {
+  constructor() {
+    super();
+    this.state = {
+      searchBox: "",
+      members: []
+    };
+  }
+  onFieldChange = (event) => {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+  }
+  componentDidMount = () => {
+    axios.get('/auth/all').then(resp => {
+      this.setState({
+        members: resp.data
+      });
+    }).catch(error => {
+      console.log(error);
+    })
+  }
+  contentSearch = (item) => {
+    if (item.username && item.username.S.toLowerCase().includes(this.state.searchBox.toLowerCase()))
+      return true;
+    if (item.name && item.name.S.toLowerCase().includes(this.state.searchBox.toLowerCase()))
+      return true;
+    if (item.email && item.email.S.toLowerCase().includes(this.state.searchBox.toLowerCase()))
+      return true;
+    return false;
+  }
   render() {
-    // THIS COMPONENT IS NOT CURRENTLY IN USE
     return (
       <div>
-        <h2>Filterable Table</h2>
-        <p>Type something in the input field to search the table for first names, last names or emails:</p>  
-        <input className="form-control" id="myInput" type="text" placeholder="Search.."/>
-        <br/>
+        <h2>Contact Sheet</h2>
+        <p>Type something in the input field to search the table for username, name or emails:</p>
+        <input className="form-control" id="searchBox" type="text" placeholder="Search.." value={this.state.searchBox} onChange={this.onFieldChange} />
+        <br />
         <table className="table table-bordered table-striped">
           <thead>
             <tr>
-              <th>Firstname</th>
-              <th>Lastname</th>
+              <th>Username</th>
+              <th>Name</th>
               <th>Email</th>
             </tr>
           </thead>
           <tbody id="myTable">
-            <tr>
-              <td>John</td>
-              <td>Doe</td>
-              <td>john@example.com</td>
-            </tr>
-            <tr>
-              <td>Mary</td>
-              <td>Moe</td>
-              <td>mary@mail.com</td>
-            </tr>
-            <tr>
-              <td>July</td>
-              <td>Dooley</td>
-              <td>july@greatstuff.com</td>
-            </tr>
-            <tr>
-              <td>Anja</td>
-              <td>Ravendale</td>
-              <td>a_r@test.com</td>
-            </tr>
+            {this.state.members
+              .filter(item => this.contentSearch(item))
+              .sort((a, b) => {
+                return a.username.S > b.username.S
+              })
+              .map(item => (
+                <tr key={item.username.S}>
+                  <td>{item.username.S}</td>
+                  <td>{item.name ? item.name.S : "N/A"}</td>
+                  <td>{item.email ? item.email.S : "N/A"}</td>
+                </tr>
+              ))}
           </tbody>
         </table>
-        
-        <p>Note that we start the search in tbody, to prevent filtering the table headers.</p>
+
+        <p>Note information is only available after login.</p>
       </div>
     );
   }

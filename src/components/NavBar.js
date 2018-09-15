@@ -6,7 +6,8 @@ class NavBar extends Component {
   render() {
     const linkItems = [
       { name: 'My Collection', url: '/collection' },
-      // {name: 'Members', url: '/members'},
+      { name: 'Members', url: '/members' },
+      { name: 'Search', url: '/search' },
       { name: 'About', url: '/about' }
     ];
     let links = linkItems.map((linkItem, index) => (

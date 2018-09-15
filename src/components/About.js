@@ -13,7 +13,9 @@ class About extends Component {
           <li className="list-group-item">React Router</li>
           <li className="list-group-item list-group-item-success">Back End: Express</li>
           <li className="list-group-item">AWS RDS PostgreSQL</li>
+          <li className="list-group-item">AWS DynamoDB</li>
           <li className="list-group-item">Sequelize</li>
+          <li className="list-group-item">Passport</li>
           <li className="list-group-item">Axios</li>
           <li className="list-group-item">Nginx</li>
         </ul>

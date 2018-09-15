@@ -55,7 +55,7 @@ class Home extends Component {
           <div className="col-sm-4">
             <div className="panel panel-success">
               <div className="panel-body text-center"><h1><CountUp end={this.state.users}/></h1></div>
-              <div className="panel-footer text-right">Users</div>
+              <div className="panel-footer text-right">Users*</div>
             </div>
           </div>
           <div className="col-sm-4">

@@ -1,8 +1,6 @@
 const AWS = require('aws-sdk');
 
-AWS.config.update({region: 'us-west-1',
-  accessKeyId: '***REMOVED***',
-  secretAccessKey: '***REMOVED***'});
+AWS.config.update({region: 'us-west-1'});
 
 const dynamodb = new AWS.DynamoDB();
 

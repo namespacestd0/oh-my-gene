@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const geneStore = require('./config/geneStoreSQL');
 const authStore = require('./config/authStoreDynamo');
+const search = require('./config/elasticsearch');
 const axios = require('axios');
 const debug = require('debug');
 const passport = require('passport');
@@ -16,7 +17,7 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(cookieParser());
 app.use(session({ secret: 'OMG', resave: false, saveUninitialized: true }));
-// app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, 'build')));
 
 // authentication
 require('./config/passport.js')(app);
@@ -26,6 +27,7 @@ app.get('/test', function (req, res) {
   return res.send('[express] server okay');
 });
 
+// register a user
 app.post('/auth/signup', function (req, res) {
   console.log(req.body);
   // search for duplicate
@@ -33,10 +35,7 @@ app.post('/auth/signup', function (req, res) {
     if (err) console.log(err, err.stack); // TODO error handling
     else if (_.isEmpty(data)) {
       // create user
-      authStore.putItem('omg-auth', {
-        username: req.body.username,
-        password: req.body.password
-      }, (err, data) => {
+      authStore.putItem('omg-auth', req.body, (err, data) => {
         if (err) console.log(err, err.stack); // TODO error handling
         else {
           // log in automatically after creation
@@ -51,23 +50,45 @@ app.post('/auth/signup', function (req, res) {
   })
 })
 
+// user login
 app.post('/auth/login',
   passport.authenticate('local'),
   function (req, res) {
     res.status(200).send('Sucessfully Logged In.');
   });
 
+// user log-in status
 app.get('/auth/login', function (req, res, next) {
   if (req.user) {
     res.send(req.user.username);
   } else {
-    res.status(403).end();
+    res.status(401).end();
   }
 })
 
+// user log out
 app.get('/auth/logout', function (req, res, next) {
   req.logout()
   res.send('Logout Sucessful.')
+})
+
+// user contact sheet
+app.get('/auth/all', function (req, res, next) {
+  if (req.user) {
+    next();
+  } else {
+    res.status(401).end();
+    // next();
+  }
+}, function (req, res) {
+  authStore.getAllItems('omg-auth', (err, data) => {
+    if (err) {
+      console.log(err);
+      res.status(500).end();
+    } else {
+      res.send(data.Items);
+    }
+  })
 })
 
 // homepage statistics
@@ -90,7 +111,7 @@ app.get('/api/statistics', function (req, res) {
   })
 })
 
-// api access point from front end to retrieve all saved entries in database
+// retrive saved collection (user specific)
 app.get('/api/items/all', function (req, res, next) {
   if (req.user) {
     next();
@@ -114,7 +135,7 @@ app.post('/api/items/:id', function (req, res) {
     geneStore.findAll({
       where: {
         user_id: req.user.username,
-        gene_id: req.param('id')
+        gene_id: req.params.id
       }
     }).then((result) => {
       // if the item can be found in saved record
@@ -124,7 +145,7 @@ app.post('/api/items/:id', function (req, res) {
         // create record in database
         geneStore.create({
           user_id: req.user.username,
-          gene_id: req.param('id')
+          gene_id: req.params.id
         }).then(() => {
           // communicate back to front end
           res.send('Insert Success.');
@@ -136,6 +157,7 @@ app.post('/api/items/:id', function (req, res) {
   }
 })
 
+// delete from database TODO: authentication
 app.delete('/api/items/:id', function (req, res) {
   geneStore.destroy({
     where: {
@@ -144,6 +166,30 @@ app.delete('/api/items/:id', function (req, res) {
     }
   }).then(() => {
     res.send('Deletion Success.')
+  })
+})
+
+app.get('/api/search/ping', function (req, res) {
+  search.ping({
+    requestTimeout: 30000,
+  }, function (error) {
+    if (error) {
+      res.status(500).send('elasticsearch cluster is down!');
+    } else {
+      res.send('elasticserch connection okay.')
+    }
+  });
+})
+
+app.put('/api/search/:id', function (req, res) {
+  search.exists({
+    index: 'genes',
+    id: req.params.id
+  }, function (err, response, status) {
+    if (err) return res.status(500).send(err);
+    console.log(status)
+    console.log(response)
+    res.status(200).end();
   })
 })
 

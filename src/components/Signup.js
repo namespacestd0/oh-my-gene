@@ -9,6 +9,8 @@ class Signup extends Component {
       username: "",
       password: "",
       confirm_password: "",
+      name: "",
+      email: "",
       username_error: false,
       password_error: false
     };
@@ -18,13 +20,21 @@ class Signup extends Component {
       [event.target.id]: event.target.value
     });
   }
+  constructRequest() {
+    let request = {
+      username: this.state.username,
+      password: this.state.password,
+    }
+    if (this.state.email)
+      request.email = this.state.email;
+    if (this.state.name)
+      request.name = this.state.name;
+    return request;
+  }
   handleSubmit = (event) => {
     event.preventDefault();
     if (this.state.password === this.state.confirm_password) {
-      axios.post('/auth/signup', {
-        username: this.state.username,
-        password: this.state.password
-      }).then((resp)=>{
+      axios.post('/auth/signup', this.constructRequest()).then((resp)=>{
         // console.log(resp);
         this.props.loginHandler(this.state.username);
       }).catch((error)=>{
@@ -47,10 +57,19 @@ class Signup extends Component {
       ) : (
       <div>
         <h2>Sign Up</h2>
+        <p>Get your own collection and find out the contact info for other researchers.</p>
         <form onSubmit={this.handleSubmit}>
           <div className={"form-group" + (this.state.username_error? ' has-error' : '') }>
             <label htmlFor="email">Username:</label>
             <input type="text" className="form-control" id="username" value={this.state.username} onChange={this.onFieldChange}/>
+          </div>
+          <div className={"form-group"}>
+            <label htmlFor="name">Name: (Optional)</label>
+            <input type="text" className="form-control" id="name" value={this.state.name} onChange={this.onFieldChange}/>
+          </div>
+          <div className={"form-group"}>
+            <label htmlFor="email">Email: (Optional)</label>
+            <input type="text" className="form-control" id="email" value={this.state.email} onChange={this.onFieldChange}/>
           </div>
           <div className={"form-group" + (this.state.password_error? ' has-warning' : '') }>
             <label htmlFor="password">Password:</label>

@@ -2,8 +2,8 @@ const Sequelize = require('sequelize');
 
 const DB_Name = 'gene',
     DB_endpoint = 'gene-db.crv3cawb7jup.us-west-1.rds.amazonaws.com',
-    DB_username = '***REMOVED***',
-    DB_password = '***REMOVED***';
+    DB_username = process.env.DB_Username,
+    DB_password = process.env.DB_Password;
 
 // initiate connection
 const sequelize = new Sequelize(DB_Name, DB_username, DB_password, {

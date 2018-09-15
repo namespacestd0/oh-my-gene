@@ -10,6 +10,7 @@ import PageNotFound from './PageNotFound';
 import View from './View';
 import Signup from './Signup';
 import axios from 'axios';
+import Search from './Search';
 
 class App extends Component {
   state = {
@@ -61,6 +62,7 @@ class App extends Component {
             <Switch>
               <Route path='/' component={Home} exact />
               <Route path='/members' component={Members} />
+              <Route path='/search' component={Search} />
               <Route path='/collection' render={() => <Collection 
                 isAuthenticated={this.state.isAuthenticated} />} />
               <Route path='/login' render={() => <Login
@@ -69,7 +71,8 @@ class App extends Component {
               <Route path='/signup' render={() => <Signup
                 isAuthenticated={this.state.isAuthenticated}
                 loginHandler={this.loginHandler} />} />
-              <Route path='/view/:id' component={View} />
+              <Route path='/view/:id' render={() => <View
+                isAuthenticated={this.state.isAuthenticated} />} />
               <Route path='/about' component={About} />
               <Route path='/404' component={PageNotFound} />
               <Route component={PageNotFound} />
