@@ -3,26 +3,20 @@ import axios from 'axios';
 import CountUp from 'react-countup';
 import { Link } from 'react-router-dom';
 
-// import PropTypes from 'prop-types';
-
 class Home extends Component {
   constructor(){
     super()
-    this.state = { // home page search result state
-      gene_id_input: '',
+    this.state = {
+      id_input: '',
       users: 0,
       genes: 0,
       records: 0
     }
   }
   componentDidMount() {
-    axios.get('/api/statistics').then(resp=>{
-      // console.log(resp)
-      this.setState({
-        users: resp.data[0], //registered users
-        genes: resp.data[1], //unique genes
-        records: resp.data[2], //total records
-      });
+    axios.get('/api/gene/statistics').then(resp=>{
+      // console.log(resp.data)
+      this.setState(resp.data);
     })
   }
 
@@ -35,13 +29,13 @@ class Home extends Component {
           <form className="form-inline" onSubmit={this.handleSubmit}>
             <div className="input-group">
               <input type="text"
-                value={this.state.gene_id_input}
-                onChange={(event) => this.setState({ gene_id_input: event.target.value })}
+                value={this.state.id_input}
+                onChange={(event) => this.setState({ id_input: event.target.value })}
                 className="form-control"
                 size="50"
                 placeholder="Search Gene by ID" required />
               <div className="input-group-btn">
-                <Link to={"/view/"+this.state.gene_id_input} className="btn btn-danger">Look Up</Link>
+                <Link to={"/view/"+this.state.id_input} className="btn btn-danger">Look Up</Link>
               </div>
             </div>
           </form>
@@ -75,8 +69,5 @@ class Home extends Component {
     );
   }
 }
-
-// Home.propTypes = {
-// };
 
 export default Home;

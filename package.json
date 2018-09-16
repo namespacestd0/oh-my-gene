@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@appbaseio/reactivesearch": "^2.8.2",
     "aws-sdk": "^2.312.0",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",

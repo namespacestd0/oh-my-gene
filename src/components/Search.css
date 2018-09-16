@@ -1,0 +1,44 @@
+div.col-sm-9 > div > div > p {
+    font-size: 1.25rem;
+    margin-top: 5px;
+}
+
+div.col-sm-9 > div > p {
+    font-size: 1.25rem;
+    margin-top: 5px;
+}
+
+div[src] {
+    width: 15%;
+    margin: 15px;
+}
+
+input.form-control {
+    font-size: 14px;
+}
+            
+svg {
+    height: 17px;
+}
+
+article p {
+    font-size: 15px;
+}
+
+.list-item {
+    font-weight: normal;
+}
+
+.loading {
+    font-size: 1.25rem;
+    margin-top: 5px;
+}
+
+.search-list > li > div.trim {
+    font-size: 14px;
+    line-height: 20px;
+}
+
+a:hover{
+    text-decoration: none;
+}

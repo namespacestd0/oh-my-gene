@@ -48,6 +48,12 @@ class App extends Component {
       username: user
     })
   }
+  loggedoutNotifier = () => {
+    this.setState({
+      isAuthenticated: false,
+      username: null
+    })
+  }
   render() {
     return (
       <Router>
@@ -64,7 +70,8 @@ class App extends Component {
               <Route path='/members' component={Members} />
               <Route path='/search' component={Search} />
               <Route path='/collection' render={() => <Collection 
-                isAuthenticated={this.state.isAuthenticated} />} />
+                isAuthenticated={this.state.isAuthenticated} 
+                loggedoutNotifier={this.loggedoutNotifier}/>} />
               <Route path='/login' render={() => <Login
                 isAuthenticated={this.state.isAuthenticated}
                 loginHandler={this.loginHandler} />} />
