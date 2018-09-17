@@ -18,10 +18,17 @@ Gene Annotation Collection Database WebApp with Searching Capability
   
 ## Development
 
-    npm install
+AWS DynamoDB, RDS, ElasticSearch services needed. Go to 'server/config' folder to set the entry point.
+
     npm start
     nodemon ./server/server.js
   
 ## Build
 
     yarn build
+    
+## Resources
+
+* [create-react-app](https://github.com/facebook/create-react-app)
+* [reactivesearch](https://github.com/appbaseio/reactivesearch)
+* [express](https://github.com/expressjs/express)
