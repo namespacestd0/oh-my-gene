@@ -18,7 +18,7 @@ Gene Annotation Collection Database WebApp with Searching Capability
   
 ## Development
 
-AWS DynamoDB, RDS, ElasticSearch services needed. Go to 'server/config' folder to set the entry point.
+AWS DynamoDB, RDS, ElasticSearch services needed. Go to `server/config` folder to set the entry point.
 
     npm start
     nodemon ./server/server.js
