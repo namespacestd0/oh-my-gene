@@ -1,11 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-// const axios = require('axios');
-// const debug = require('debug');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-// const _ = require('lodash');
 
 const app = express();
 
@@ -13,7 +10,7 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(cookieParser());
 app.use(session({ secret: 'OMG', resave: false, saveUninitialized: true }));
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, '../build')));
 
 app.post('/test', function (req, res) {
   return res.send({
@@ -34,7 +31,7 @@ require('./routes/search')(app);
 
 // entry point
 app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, '../build', 'index.html'));
 });
 
 app.listen(8080, () => {

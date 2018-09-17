@@ -5,8 +5,6 @@ import {
   MultiList,
   ResultList
 } from "@appbaseio/reactivesearch";
-// import { Link } from 'react-router-dom';
-// import PropTypes from 'prop-types';
 import './Search.css';
 
 class Search extends Component {
@@ -42,13 +40,26 @@ class Search extends Component {
           <div className="col-sm-9">
             <DataSearch
               componentId="mainSearch"
-              dataField={["summary","name.keyword"]}
+              dataField={["summary","name"]}
               debounce={100}
+              autosuggest={false}
+              highlight={true}
               innerClass={{
                 input: "form-control",
                 list: "search-list"
               }}
-              placeholder="Search for genes..."
+              customHighlight={(props) => ({
+                highlight: {
+                    pre_tags: ['['],
+                    post_tags: [']'],
+                    fields: {
+                        summary: {},
+                        name: {},
+                    },
+                    number_of_fragments: 0,
+                },
+            })}
+              placeholder="Search for Genes..."
             />
             <ResultList
               componentId="results"
@@ -80,8 +91,5 @@ class Search extends Component {
     );
   }
 }
-
-// Search.propTypes = {
-// };
 
 export default Search;

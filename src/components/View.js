@@ -2,12 +2,6 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router'
 import JSONFormatter from 'json-formatter-js'
 import axios from 'axios';
-// import Qs from 'qs'
-
-// status: loading -> 404
-//         loaded  -> authentication -> failed
-//                                   -> pass     ->  added/indexed
-
 
 class View extends Component {
   constructor() {
@@ -32,7 +26,6 @@ class View extends Component {
     if (this.props.isAuthenticated) {
       axios.delete('/api/search/' + this.state.geneOtherInfo._id)
         .then((resp) => {
-          console.log(resp)
           this.setState({
             info: false,
             warning: false,
